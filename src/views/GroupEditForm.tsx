@@ -6,8 +6,9 @@ import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
 import {
-  Button, TextField, Card,
-  Divider, List, ListItem,
+  Button, TextField,
+  Table, TableRow, TableHead,
+  TableFooter, TableBody, TableCell,
   ListItemSecondaryAction,
   IconButton
 } from '@material-ui/core';
@@ -35,60 +36,79 @@ const GroupEditForm: React.FC<{ groupIndex: number, group: Group }> = ({ groupIn
   const history = useHistory();
 
   return (
-    <Card>
-      <List>
-        <ListItem>
-          <Controller
-            name="name"
-            as={<TextField variant="outlined" label="Group" style={{ width: '46ch' }} />}
-            control={control}
-            defaultValue={group.name}
-          />
-        </ListItem>
 
-        <Divider />
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell colSpan={4}>
+            <Controller
+              name="name"
+              as={<TextField variant="outlined" label="Group" fullWidth />}
+              control={control}
+              defaultValue={group.name}
+            />
+          </TableCell>
+        </TableRow>
+      </TableHead>
 
+      <TableBody>
         {fields.map((item, index) => (
-          <ListItem key={item.id}>
-            <Controller
-              name={`links[${index}].url`}
-              control={control}
-              as={<TextField variant="outlined" size="small" label="URL" fullWidth />}
-              defaultValue={item.url}
-            />
+          <TableRow key={item.id}>
+            <TableCell>
+              <Controller
+                name={`links[${index}].url`}
+                control={control}
+                as={<TextField variant="outlined" size="small" label="URL" fullWidth />}
+                defaultValue={item.url}
+              />
+            </TableCell>
 
-            <Controller
-              name={`links[${index}].zoom`}
-              control={control}
-              as={<TextField variant="outlined" size="small" label="Zoom (def: 1)" />}
-              defaultValue={item.zoom}
-            />
+            <TableCell style={{ width: '20%' }}>
+              <Controller
+                name={`links[${index}].zoom`}
+                control={control}
+                as={<TextField variant="outlined" size="small" label="Zoom (def: 1)" />}
+                defaultValue={item.zoom}
+              />
+            </TableCell>
 
-            <Controller
-              name={`links[${index}].scroll_to`}
-              control={control}
-              as={<TextField variant="outlined" size="small" label="Scroll (px)" />}
-              defaultValue={item.scroll_to || 0}
-            />
+            <TableCell style={{ width: '15%' }}>
+              <Controller
+                name={`links[${index}].scroll_to`}
+                control={control}
+                as={<TextField variant="outlined" size="small" label="Scroll (px)" />}
+                defaultValue={item.scroll_to || 0}
+              />
+            </TableCell>
 
-            <ListItemSecondaryAction>
+            <TableCell style={{ width: '5%' }}>
               <IconButton onClick={() => { remove(index); }}>
                 <DeleteIcon />
               </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
+            </TableCell>
+          </TableRow>
         ))}
+      </TableBody>
 
-        <ListItem>
-          <Button
-            type="button"
-            variant="contained"
-            color="default"
-            onClick={() => { append({ url: '', zoom: 1 }); }}
-          >
-            Add
+      <TableFooter>
+        <TableRow>
+          <TableCell>
+            <Button
+              type="button"
+              variant="contained"
+              color="default"
+              onClick={() => { append({ url: '', zoom: 1 }); }}
+            >
+              Add URL
           </Button>
-          <ListItemSecondaryAction>
+          </TableCell>
+        </TableRow>
+
+        <TableRow>
+          <TableCell align="right" colSpan={4}>
+            <Button onClick={() => {
+              history.push('/');
+            }}>Cancel</Button>
             <Button
               color="primary"
               variant="contained"
@@ -103,11 +123,11 @@ const GroupEditForm: React.FC<{ groupIndex: number, group: Group }> = ({ groupIn
               })}
             >
               Save
-            </Button>
-          </ListItemSecondaryAction>
-        </ListItem>
-      </List>
-    </Card >
+          </Button>
+          </TableCell>
+        </TableRow>
+      </TableFooter>
+    </Table>
   );
 };
 
