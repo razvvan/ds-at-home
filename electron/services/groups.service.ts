@@ -41,13 +41,12 @@ export class GroupsService {
       return;
     }
 
-    if (this.currentIdx >= this.groups.length - 1) {
+    this.currentIdx = this.currentIdx + 1;
+
+    if (this.currentIdx > this.groups.length - 1) {
       // end of the list, go back to the start
       this.currentIdx = 0;
-      return;
     }
-
-    this.currentIdx = this.currentIdx + 1;
 
     this.setCurrentGroup();
   };
