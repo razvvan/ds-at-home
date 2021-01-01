@@ -10,10 +10,45 @@ Turn your old TV / Monitor into a carousel of content.
 - News
 - Dashboards
 
-## Running dev
+## Running 
+
+### Dev
 
 ```
 cp links.json.sample links.json
 yarn install
 yarn start
 ```
+
+### on your RPi 
+
+Download and install a [release](https://github.com/razvvan/ds-at-home/releases)
+
+Example:
+
+```
+$ wget https://github.com/razvvan/ds-at-home/releases/download/v0.2.1/ds-at-home_0.2.1_arm64.deb
+$ sudo dpkg -i ./ds-at-home_0.2.1_arm64.deb
+
+$ export DISPLAY=:0
+$ ds-at-home --full-screen=true --single-touch=true
+```
+
+## Screenshots
+
+#### Stocks
+![](docs/sample1.gif)
+
+
+#### News
+![](docs/sample2.gif)
+
+
+#### Multiple group support
+![](docs/admin1.png)
+
+
+#### Specifying URLs with Zoom and Scroll settings
+![](docs/admin2.png)
+
+
