@@ -26,8 +26,8 @@ Turn your old TV / Monitor into a carousel of content.
 
 ### Keyboard shortcuts
 
-By default the shortcuts are Cmd/Ctrl + Shift + <Key>.
-Switch to <Key> only by running with `--single-touch`
+By default the shortcuts are Cmd/Ctrl + Shift + [Key].
+Switch to [Key] only by running with `--single-touch`
 
 | Key   | Description      |
 | ----- | ---------------- |
