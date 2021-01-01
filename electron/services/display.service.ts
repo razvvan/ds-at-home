@@ -26,7 +26,7 @@ export class DisplayService {
 
     this.mainWindow.webContents.once('dom-ready', () => {
 
-      this.mainWindow.webContents.setZoomFactor(wc.zoom);
+      this.mainWindow.webContents.setZoomFactor(wc.zoom || 1);
 
       this.mainWindow.webContents.executeJavaScript(`
         window.scrollTo(0, ${wc.scroll_to || 0});
