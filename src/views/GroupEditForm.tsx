@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { Group } from '../models/web_content.model';
+import { Group, WebItem } from '../models/web_content.model';
 
 const GroupEditForm: React.FC<{ groupIndex: number, group: Group }> = ({ groupIndex, group }) => {
   const { control, handleSubmit } = useForm({
@@ -84,7 +84,7 @@ const GroupEditForm: React.FC<{ groupIndex: number, group: Group }> = ({ groupIn
             type="button"
             variant="contained"
             color="default"
-            onClick={() => { append({ url: '', zoom: '1' }); }}
+            onClick={() => { append({ url: '', zoom: 1 }); }}
           >
             Add
           </Button>
@@ -93,7 +93,11 @@ const GroupEditForm: React.FC<{ groupIndex: number, group: Group }> = ({ groupIn
               color="primary"
               variant="contained"
               type="button"
-              onClick={handleSubmit((data) => {
+              onClick={handleSubmit((data: Group) => {
+                const newGroup = data;
+                newGroup.links = newGroup.links.map((link): WebItem => {
+                  return { url: link.url, scroll_to: Number(link.scroll_to), zoom: Number(link.zoom) };
+                });
                 ipcRenderer.send('save_group', data, groupIndex);
                 history.push('/');
               })}
