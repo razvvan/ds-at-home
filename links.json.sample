@@ -1,0 +1,63 @@
+[
+  {
+    "name": "News",
+    "links": [
+      {
+        "url": "https://teddit.net/r/politics",
+        "zoom": 2
+      },
+      {
+        "url": "https://teddit.net/r/europe",
+        "zoom": 2
+      },
+      {
+        "url": "https://news.ycombinator.com/",
+        "zoom": 2
+      },
+      {
+        "url": "https://lobste.rs/",
+        "zoom": 2
+      }
+    ]
+  },
+  {
+    "name": "Money",
+    "links": [
+      {
+        "scroll_to": 0,
+        "url": "https://finance.yahoo.com/quote/%5EGSPC",
+        "zoom": 1.7
+      },
+      {
+        "scroll_to": 0,
+        "url": "https://finance.yahoo.com/quote/AAPL",
+        "zoom": 1.7
+      },
+      {
+        "scroll_to": 0,
+        "url": "https://finance.yahoo.com/quote/AMD",
+        "zoom": 1.7
+      },
+      {
+        "scroll_to": 0,
+        "url": "https://finance.yahoo.com/quote/MSFT",
+        "zoom": 1.7
+      },
+      {
+        "scroll_to": 0,
+        "url": "https://www.bloomberg.com/markets/stocks/world-indexes/americas",
+        "zoom": 1.4
+      },
+      {
+        "scroll_to": 0,
+        "url": "https://tweetdeck.twitter.com/",
+        "zoom": 1.4
+      },
+      {
+        "scroll_to": 0,
+        "url": "https://teddit.net/r/wallstreetbets",
+        "zoom": 2
+      }
+    ]
+  }
+]
