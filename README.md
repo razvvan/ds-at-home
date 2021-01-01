@@ -4,37 +4,9 @@ Digital Signage at Home? Data Sciene @ Home? Double Sandwich @ 🏠?
 
 Turn your old TV / Monitor into a carousel of content.
 
-## Possible applications
+## What it looks like
 
-- Stock information
-- News
-- Dashboards
-
-## Running 
-
-### Dev
-
-```
-cp links.json.sample links.json
-yarn install
-yarn start
-```
-
-### on your RPi 
-
-Download and install a [release](https://github.com/razvvan/ds-at-home/releases)
-
-Example:
-
-```
-$ wget https://github.com/razvvan/ds-at-home/releases/download/v0.2.1/ds-at-home_0.2.1_arm64.deb
-$ sudo dpkg -i ./ds-at-home_0.2.1_arm64.deb
-
-$ export DISPLAY=:0
-$ ds-at-home --full-screen=true --single-touch=true
-```
-
-## Screenshots
+![](docs/onmytv.png)
 
 #### Stocks
 ![](docs/sample1.gif)
@@ -52,3 +24,40 @@ $ ds-at-home --full-screen=true --single-touch=true
 ![](docs/admin2.png)
 
 
+### Keyboard shortcuts
+
+By default the shortcuts are Cmd/Ctrl + Shift + <Key>.
+Switch to <Key> only by running with `--single-touch`
+
+| Key   | Description      |
+| ----- | ---------------- |
+| N     | Next group       |
+| Right | Next page        |
+| Left  | Previous page    |
+| P     | Pause auto play  |
+| R     | Resume auto play |
+
+
+## Running
+
+### Dev
+
+```
+cp links.json.sample links.json
+yarn install
+yarn start
+```
+
+### on your RPi
+
+Download and install a [release](https://github.com/razvvan/ds-at-home/releases)
+
+Example:
+
+```
+$ wget https://github.com/razvvan/ds-at-home/releases/download/v0.2.1/ds-at-home_0.2.1_arm64.deb
+$ sudo dpkg -i ./ds-at-home_0.2.1_arm64.deb
+
+$ export DISPLAY=:0
+$ ds-at-home --full-screen=true --single-touch=true
+```
