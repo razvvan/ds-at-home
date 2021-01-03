@@ -8,6 +8,7 @@ import { DisplayService } from './services/display.service';
 import { GroupsService } from './services/groups.service';
 import { CronService } from './services/cron.service';
 import { KeysService } from './services/keys.service';
+import { CECService } from './services/cec.service';
 import { addIPCListeners } from './ipc';
 import { Group, AppConfig } from '../src/models/web_content.model';
 import { errHandler } from './lib';
@@ -16,13 +17,15 @@ interface CmdArgs {
   fullScreen: boolean
   singleTouch: boolean
   loadFromFile: string
+  withCEC: boolean
 }
 
 function getCmdArgs(): CmdArgs {
   return {
     fullScreen: app.commandLine.getSwitchValue('full-screen') === 'true',
     singleTouch: app.commandLine.getSwitchValue('single-touch') === 'true',
-    loadFromFile: app.commandLine.getSwitchValue('load-from-file')
+    loadFromFile: app.commandLine.getSwitchValue('load-from-file'),
+    withCEC: app.commandLine.getSwitchValue('with-cec') === 'true'
   };
 }
 
@@ -69,6 +72,8 @@ function startApp() {
     });
   }
 
+  const cecService = new CECService(cmdArgs.withCEC);
+
   const cronService = new CronService(3, groupsService.nextItem);
   cronService.start();
 
@@ -80,7 +85,9 @@ function startApp() {
       cronService.stop,
       groupsService.next,
       groupsService.currentGroupService.next,
-      groupsService.currentGroupService.prev
+      groupsService.currentGroupService.prev,
+      cecService.powerOff,
+      cecService.powerOn
     );
 
   const appMenu = new AppMenu(mainWindow, displayService, cronService, keysService, groupsService);

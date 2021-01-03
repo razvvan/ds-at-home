@@ -1,5 +1,3 @@
-import log from 'electron-log';
-
 import { globalShortcut } from 'electron';
 
 export class KeysService {
@@ -9,6 +7,8 @@ export class KeysService {
   nextGroup: () => void;
   nextItem: () => void;
   prevItem: () => void;
+  powerOff: () => void;
+  powerOn: () => void;
 
   constructor(
     withCTRL: boolean,
@@ -16,7 +16,9 @@ export class KeysService {
     cronStop: () => void,
     nextGroup: () => void,
     nextItem: () => void,
-    prevItem: () => void
+    prevItem: () => void,
+    powerOff: () => void,
+    powerOn: () => void
   ) {
 
     this.prefix = 'CommandOrControl+Shift+';
@@ -30,6 +32,8 @@ export class KeysService {
     this.nextGroup = nextGroup;
     this.nextItem = nextItem;
     this.prevItem = prevItem;
+    this.powerOff = powerOff;
+    this.powerOn = powerOn;
 
     this.register();
   }
@@ -48,11 +52,11 @@ export class KeysService {
     });
 
     globalShortcut.register(`${this.prefix}H`, () => {
-      log.info('power off');
+      this.powerOff();
     });
 
     globalShortcut.register(`${this.prefix}J`, () => {
-      log.info('power on');
+      this.powerOn();
     });
 
     globalShortcut.register(`${this.prefix}Left`, () => {
