@@ -60,11 +60,11 @@ export class KeysService {
     });
 
     globalShortcut.register(`${this.prefix}Left`, () => {
-      this.nextItem();
+      this.prevItem();
     });
 
     globalShortcut.register(`${this.prefix}Right`, () => {
-      this.prevItem();
+      this.nextItem();
     });
   }
 
