@@ -1,4 +1,5 @@
 import { globalShortcut } from 'electron';
+import log from 'electron-log';
 
 export class KeysService {
   prefix: string;
@@ -65,6 +66,17 @@ export class KeysService {
 
     globalShortcut.register(`${this.prefix}Right`, () => {
       this.nextItem();
+    });
+
+    globalShortcut.register('CommandOrControl+Shift+D', () => {
+      log.info('turn global shortcuts off');
+      globalShortcut.unregisterAll();
+
+      globalShortcut.register('CommandOrControl+Shift+D', () => {
+        log.info('turn global shortcuts on');
+        globalShortcut.unregisterAll();
+        this.register();
+      });
     });
   }
 
