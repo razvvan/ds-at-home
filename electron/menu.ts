@@ -1,10 +1,13 @@
 import { app, BrowserWindow } from 'electron';
 
 import { DisplayService } from './services/display.service';
-import { WebItem } from '../src/models/web_content.model';
+import { AppConfig } from '../src/models/web_content.model';
+import { WebItem,  } from '../src/models/web_content.model';
 import { CronService } from 'services/cron.service';
 import { KeysService } from 'services/keys.service';
 import { GroupsService } from 'services/groups.service';
+import { errHandler } from './lib';
+import * as storage from 'electron-json-storage';
 
 import { adminURL } from './lib/adminurl';
 
@@ -54,13 +57,25 @@ export class AppMenu {
         submenu: [
           { label: 'Start playlist',
             click: () => {
+
               this.cronService.start();
               this.keysService.register();
+
+              storage.get('app_config', (err: never, appConfig: AppConfig) => {
+                if (err !== undefined) {
+                  errHandler(err);
+                  return;
+                }
+
+                this.groupsService.set(appConfig.groups, appConfig.settings.defaultGroup);
+              });
+
               this.groupsService.nextItem();
             }
           },
           { label: 'Change playlist',
             click: () => {
+
               this.cronService.start();
               this.keysService.register();
               this.groupsService.next();
