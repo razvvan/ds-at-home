@@ -17,6 +17,7 @@
     "watch-electron": "tsc --watch --project electron/tsconfig.json",
     "start-react": "cross-env BROWSER=none react-scripts start",
     "dist-rpi": "npm run build && npm run build-electron && electron-builder build --arm64 --linux deb $EXTRAMETADATA -c.extraMetadata.main=build/electron/main.js",
+    "dist-osx": "npm run build && npm run build-electron && electron-builder build --x64 --mac dmg $EXTRAMETADATA -c.extraMetadata.main=build/electron/main.js",
     "dist-local": "npm run build && npm run build-electron && electron-builder build -c.extraMetadata.main=build/electron/main.js",
     "nodemon": "nodemon"
   },
@@ -64,6 +65,7 @@
     "directories": {
       "buildResources": "public"
     },
+    "asar": true,
     "extraResources": [
       {
         "from": "./electron/assets/",
