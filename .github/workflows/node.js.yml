@@ -49,7 +49,7 @@ jobs:
         prerelease: false
 
     - name: Upload Release Asset (rpi)
-      id: upload-release-asset
+      id: upload-release-asset-rpi
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -60,7 +60,7 @@ jobs:
         asset_content_type: application/vnd.debian.binary-package
 
     - name: Upload Release Asset (osx)
-      id: upload-release-asset
+      id: upload-release-asset-osx
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
