@@ -29,18 +29,21 @@ jobs:
     - name: Install packages
       run: yarn install
 
+    - name: Get Release ID
+      id: get_id
+      run: |
+        upload_url=$(curl -sL https://api.github.com/repos/${{github.repository}}/releases/${{ github.ref }}?access_token=${{ secrets.GITHUB_TOKEN }} | jq -r '.upload_url')
+        echo ::set-output name=upload_url::$upload_url
+
+    - run: |
+        echo ${{ steps.get_id.outputs.upload_url }}
+
     - id: dist-builder
       run: |
         version=$(echo $GITHUB_REF | sed 's/refs\/tags\/v//')
         echo "ok: $version"
         EXTRAMETADATA="-c.extraMetadata.version=$version" yarn run dist-rpi
         echo "::set-output name=V_TAG::$version"
-
-    - name: Get Release ID
-      id: get_id
-      run:
-        upload_url=$(curl -sL https://api.github.com/repos/${{github.repository}}/releases/${{ github.ref }}?access_token=${{ secrets.GITHUB_TOKEN }} | jq -r '.upload_url')
-         echo ::set-output name=upload_url::$upload_url
 
     - name: Upload Release Asset (rpi)
       id: upload-release-asset-rpi
