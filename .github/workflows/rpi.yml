@@ -33,7 +33,7 @@ jobs:
       id: set_ids
       run: |
         version=$(echo ${{ github.ref }} | sed 's/refs\/tags\/v//')
-        upload_url=$(curl -s "https://api.github.com/repos/razvvan/ds-at-home/releases" | jq '.[] | select(.tag_name=="$version") | .upload_url')
+        upload_url=$(curl -s "https://api.github.com/repos/razvvan/ds-at-home/releases" | jq '.[] | select(.tag_name=="v'$version'") | .upload_url')
 
         echo "::set-output name=V_TAG::$version"
         echo "::set-output name=upload_url::$upload_url"
