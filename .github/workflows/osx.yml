@@ -1,4 +1,4 @@
-name: Build rPI version
+name: Build osx version
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: macOS-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -29,10 +29,10 @@ jobs:
     - name: Build
       run: |
         version=$(echo ${{ github.ref }} | sed 's/refs\/tags\/v//')
-        EXTRAMETADATA="-c.extraMetadata.version=$version" yarn run dist-rpi
+        EXTRAMETADATA="-c.extraMetadata.version=$version" yarn run dist-osx
 
     - name: Upload
       run: |
         version=$(echo ${{ github.ref }} | sed 's/refs\/tags\/v//')
         export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
-        gh release upload "v"$version ./dist/ds-at-home_${version}_arm64.deb
+        gh release upload "v"$version ./dist/ds-at-home-${version}.dmg
