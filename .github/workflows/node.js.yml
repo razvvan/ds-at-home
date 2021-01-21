@@ -36,16 +36,11 @@ jobs:
         EXTRAMETADATA="-c.extraMetadata.version=$version" yarn run dist-rpi
         echo "::set-output name=V_TAG::$version"
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
+    - name: Get Release ID
+      id: get_id
+      run:
+        upload_url=$(curl -sL https://api.github.com/repos/${{github.repository}}/releases/${{ github.ref }}?access_token=${{ secrets.GITHUB_TOKEN }} | jq -r '.upload_url')
+         echo ::set-output name=upload_url::$upload_url
 
     - name: Upload Release Asset (rpi)
       id: upload-release-asset-rpi
@@ -53,7 +48,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        upload_url: ${{ steps.get_id.outputs.upload_url }}
         asset_path: ./dist/ds-at-home_${{ steps.dist-builder.outputs.V_TAG }}_arm64.deb
         asset_name: ds-at-home_${{ steps.dist-builder.outputs.V_TAG }}_arm64.deb
         asset_content_type: application/vnd.debian.binary-package
