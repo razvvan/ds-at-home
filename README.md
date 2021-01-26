@@ -38,6 +38,7 @@ Switch to [Key] only by running with `--single-touch`
 | R     | Resume auto play |
 | H     | Turn display off |
 | J     | Power on display |
+| B     | Go back          |
 
 During runtime, you may need control of your keyboards.
 `Cmd/Ctrl + Shift + D` will toggle keyboard shortcuts.

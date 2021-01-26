@@ -87,7 +87,8 @@ function startApp() {
       groupsService.currentGroupService.next,
       groupsService.currentGroupService.prev,
       cecService.powerOff,
-      cecService.powerOn
+      cecService.powerOn,
+      displayService.goBack,
     );
 
   const appMenu = new AppMenu(mainWindow, displayService, cronService, keysService, groupsService);

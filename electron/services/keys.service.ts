@@ -10,6 +10,7 @@ export class KeysService {
   prevItem: () => void;
   powerOff: () => void;
   powerOn: () => void;
+  goBack: () => void;
 
   constructor(
     withCTRL: boolean,
@@ -19,7 +20,8 @@ export class KeysService {
     nextItem: () => void,
     prevItem: () => void,
     powerOff: () => void,
-    powerOn: () => void
+    powerOn: () => void,
+    goBack: () => void,
   ) {
 
     this.prefix = 'CommandOrControl+Shift+';
@@ -35,6 +37,7 @@ export class KeysService {
     this.prevItem = prevItem;
     this.powerOff = powerOff;
     this.powerOn = powerOn;
+    this.goBack = goBack;
 
     this.register();
   }
@@ -66,6 +69,10 @@ export class KeysService {
 
     globalShortcut.register(`${this.prefix}Right`, () => {
       this.nextItem();
+    });
+
+    globalShortcut.register(`${this.prefix}B`, () => {
+      this.goBack();
     });
 
     globalShortcut.register('CommandOrControl+Shift+D', () => {

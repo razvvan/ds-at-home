@@ -14,6 +14,10 @@ export class DisplayService {
     this.errHandler = errHandler;
   }
 
+  goBack = (): void => {
+    this.mainWindow.webContents.goBack();
+  };
+
   showURL = (wc: WebItem): void => {
     if (this.mainWindow === undefined) {
       log.error('mainWindow not ready');
