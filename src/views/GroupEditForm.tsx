@@ -23,7 +23,9 @@ const GroupEditForm: React.FC<{ groupIndex: number, group: Group }> = ({ groupIn
       links: group.links.map((webItem) => ({
         zoom: webItem.zoom,
         scroll_to: webItem.scroll_to,
-        url: webItem.url
+        url: webItem.url,
+        prepend_element_by_class_to_body: webItem.prepend_element_by_class_to_body,
+        prepend_element_by_id_to_body: webItem.prepend_element_by_id_to_body,
       }))
     }
   });
@@ -53,40 +55,60 @@ const GroupEditForm: React.FC<{ groupIndex: number, group: Group }> = ({ groupIn
 
       <TableBody>
         {fields.map((item, index) => (
-          <TableRow key={item.id}>
-            <TableCell>
-              <Controller
-                name={`links[${index}].url`}
-                control={control}
-                as={<TextField variant="outlined" size="small" label="URL" fullWidth />}
-                defaultValue={item.url}
-              />
-            </TableCell>
+          <React.Fragment key={item.id}>
+            <TableRow>
+              <TableCell>
+                <Controller
+                  name={`links[${index}].url`}
+                  control={control}
+                  as={<TextField variant="outlined" size="small" label="URL" fullWidth />}
+                  defaultValue={item.url}
+                />
+              </TableCell>
 
-            <TableCell style={{ width: '20%' }}>
-              <Controller
-                name={`links[${index}].zoom`}
-                control={control}
-                as={<TextField variant="outlined" size="small" label="Zoom (def: 1)" />}
-                defaultValue={item.zoom}
-              />
-            </TableCell>
+              <TableCell style={{ width: '20%' }}>
+                <Controller
+                  name={`links[${index}].zoom`}
+                  control={control}
+                  as={<TextField variant="outlined" size="small" label="Zoom (def: 1)" />}
+                  defaultValue={item.zoom}
+                />
+              </TableCell>
 
-            <TableCell style={{ width: '15%' }}>
-              <Controller
-                name={`links[${index}].scroll_to`}
-                control={control}
-                as={<TextField variant="outlined" size="small" label="Scroll (px)" />}
-                defaultValue={item.scroll_to || 0}
-              />
-            </TableCell>
+              <TableCell style={{ width: '15%' }}>
+                <Controller
+                  name={`links[${index}].scroll_to`}
+                  control={control}
+                  as={<TextField variant="outlined" size="small" label="Scroll (px)" />}
+                  defaultValue={item.scroll_to || 0}
+                />
+              </TableCell>
 
-            <TableCell style={{ width: '5%' }}>
-              <IconButton onClick={() => { remove(index); }}>
-                <DeleteIcon />
-              </IconButton>
-            </TableCell>
-          </TableRow>
+              <TableCell style={{ width: '5%' }}>
+                <IconButton onClick={() => { remove(index); }}>
+                  <DeleteIcon />
+                </IconButton>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <Controller
+                  name={`links[${index}].prepend_element_by_class_to_body`}
+                  control={control}
+                  as={<TextField variant="outlined" size="medium" label="Zoom in on Element with class name" />}
+                  defaultValue={item.prepend_element_by_class_to_body || ''}
+                />
+              </TableCell>
+              <TableCell>
+                <Controller
+                  name={`links[${index}].prepend_element_by_id_to_body`}
+                  control={control}
+                  as={<TextField variant="outlined" size="medium" label="Zoom in on Element with id" />}
+                  defaultValue={item.prepend_element_by_id_to_body || ''}
+                />
+              </TableCell>
+            </TableRow>
+          </React.Fragment>
         ))}
       </TableBody>
 
@@ -116,7 +138,13 @@ const GroupEditForm: React.FC<{ groupIndex: number, group: Group }> = ({ groupIn
               onClick={handleSubmit((data: Group) => {
                 const newGroup = data;
                 newGroup.links = newGroup.links.map((link): WebItem => {
-                  return { url: link.url, scroll_to: Number(link.scroll_to), zoom: Number(link.zoom) };
+                  return {
+                    url: link.url,
+                    scroll_to: Number(link.scroll_to),
+                    zoom: Number(link.zoom),
+                    prepend_element_by_class_to_body: link.prepend_element_by_class_to_body,
+                    prepend_element_by_id_to_body: link.prepend_element_by_id_to_body,
+                  };
                 });
                 ipcRenderer.send('save_group', data, groupIndex);
                 history.push('/');

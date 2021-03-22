@@ -35,6 +35,18 @@ export class DisplayService {
       this.mainWindow.webContents.executeJavaScript(`
         window.scrollTo(0, ${wc.scroll_to || 0});
       `);
+
+      if (wc.prepend_element_by_class_to_body !== '') {
+        this.mainWindow.webContents.executeJavaScript(`
+        document.body.prepend(document.getElementsByClassName('${wc.prepend_element_by_class_to_body}')[0])
+      `);
+      }
+
+      if (wc.prepend_element_by_id_to_body !== '') {
+        this.mainWindow.webContents.executeJavaScript(`
+        document.body.prepend(document.getElementById('${wc.prepend_element_by_id_to_body}'))
+      `);
+      }
     });
   };
 }
